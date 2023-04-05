@@ -1,0 +1,180 @@
+% 서울대학교 컴퓨터공학부 석사ㅡ 박사 학위논문
+% LaTeX 양식 샘플
+\RequirePackage{fix-cm} % documentclass 이전에 넣는다.
+% oneside : 단면 인쇄용
+% twoside : 양면 인쇄용
+% ko : 국문 논문 작성
+% master : 석사
+% phd : 박사
+% openright : 챕터가 홀수쪽에서 시작
+\documentclass[oneside,phd]{snuthesis}
+
+\include{snutocstyle} % SNU toc style
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 다른 패키지 로드
+%% http://faq.ktug.or.kr/faq/pdflatex%B0%FAlatex%B5%BF%BD%C3%BB%E7%BF%EB
+%% 필요에 따라 직접 수정 필요
+\ifpdf
+	\input glyphtounicode\pdfgentounicode=1 %type 1 font사용시
+	%\usepackage[pdftex,unicode]{hyperref} % delete me
+	\usepackage[pdftex]{graphicx}
+	%\usepackage[pdftex,svgnames]{xcolor}
+\else
+	%\usepackage[dvipdfmx,unicode]{hyperref} % delete me
+	\usepackage[dvipdfmx]{graphicx}
+	%\usepackage[dvipdfmx,svgnames]{xcolor}
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \usepackage{graphicx,epsfig,wrapfig,url,xcolor,listings}
+
+% TODO: additional packages
+\usepackage{epsfig}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{footnote}
+\usepackage{algorithmic}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{soul}
+\usepackage{diagbox}
+\usepackage{tabularx}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\hwkim}[1]{{\color{teal}{\small\bf\sf [HW: #1]}}}
+\newcommand{\new}[1]{#1}
+
+%% \title : 22pt로 나오는 큰 제목
+%% \title* : 16pt로 나오는 작은 제목
+\title{Your Ph.D. Thesis \\ Title}
+\title*{우리말 제목}
+
+\academicko{공학}
+\schoolen{COLLEGE OF ENGINEERING}
+% 2013학번까지 전기.컴퓨터공학부
+%\departmenten{DEPARTMENT OF ELECTRICAL ENGINEERING & COMPUTER SCIENCE}
+%\departmentko{전기$\cdotp$컴퓨터 공학부}
+% 2014학번부터 컴퓨터공학부
+\departmenten{DEPARTMENT OF COMPUTER SCIENCE \& ENGINEERING}
+\departmentko{컴퓨터공학부}
+
+%% 저자 이름 Author's(Your) name
+\author{Your name}
+\author*{네~이~름} % Insert space for Hangul name.
+
+%% 학번 Student number
+\studentnumber{XXXX-XXXXX}
+
+%% 지도교수님 성함 Advisor's name
+%% (?) Use Korean name for Korean professor.
+\advisor{Your advisor's name}
+\advisor*{교~수~님} % Insert space for Hangul name.
+
+%% 학위 수여일 Graduation date
+%% 표지에 적히는 날짜.
+%% 여름졸업이면 8월, 겨울졸업이면 2월
+%\graddate{2022~년~2~월}
+\graddate{August 2023}
+
+%% 논문 제출일 Submission date
+%% (?) Use Korean date format.
+%% 컴공 논문 제본 요령: "논문심사계획"상의 심사용 논문제출기한이 속하는 연,월.
+%% 최초 심사용 논문을 제출하는 날이므로, 일반적으로 심사 학기 시작월.
+\submissiondate{2023~년~02~월}
+
+%% 논문 인준일 Approval date
+%% (?) Use Korean date format.
+%% 컴공 논문 제본 요령: "논문심사계획"상의 논문종심일이 속하는 연,월.
+%% 실제 인준지에 서명받은 날로 적으면 됨.
+\approvaldate{2023~년~05~월}
+
+%% Note: 인준지의 교수님 성함은
+%% 컴퓨터로 출력하지 않고, 교수님께서
+%% 자필로 쓰시기도 합니다.
+%% Committee members' names
+%% 위원장, 교수님, 나머지 심사위원들 순으로 이름을 적습니다.
+\committeemembers%
+{위~원~장}%
+{지~도~교~수~님}%
+{교~수~님}%
+{교~수~님}%
+{교~수~님}
+%% Length of underline
+%\setlength{\committeenameunderlinelength}{7cm}
+
+\begin{document}
+\pagenumbering{Roman}
+\makefrontcover
+\makefrontcover
+\makeapproval
+
+% not final one...
+\iffalse
+
+\thispagestyle{empty}
+\newpage
+\mbox{}
+\newpage
+
+\makefrontcover
+% 임시 제본이라 인준지가 필요없는 경우 아래줄을 지우세요.
+\makeapproval
+
+\fi
+
+\cleardoublepage
+\pagenumbering{roman}
+% 초록 Abstract
+
+% 이제 평소 논문 쓰시듯 쓰면 됩니다.
+\keyword{Deep Learning, Natural Language Processing, Open-domain Dialogue, Social Cognition, Social Commonsense}
+\begin{abstract}
+    Hello, there! Attention is all you need to graduate \cite{Vaswani:2017:NeurIPS}.
+\end{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+\input{01-intro.tex}
+
+\input{02-background.tex}
+
+
+\chapter{Your paper 01}
+\label{chp:paper01}
+
+\input{03-your-paper-1.tex}
+
+
+\chapter{Your paper 02}
+\label{chp:paper02}
+
+\input{04-your-paper-2.tex}
+
+
+\input{xx-conclusion.tex}
+
+%\appendix
+
+%\chapter{My Appendix}
+%\lipsum[1-3]
+
+\bibliographystyle{ieeetr}
+\bibliography{thesis}
+
+\input{yy-acknowledgements.tex}
+
+\input{zz-korean-summary.tex}
+
+\end{document}
+
