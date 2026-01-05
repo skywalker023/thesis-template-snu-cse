@@ -282,39 +282,62 @@
 %% 직접 고쳐준다.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	본문 여백 조정
+%	종이 크기는 달라도 여백은 동일했었던 듯 하여 통합 할 수 있도록 variable로 따로 빼냄
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\contenthorizontalmargin}
+\setlength{\contenthorizontalmargin}{30mm}
+\newlength{\contenttopmargin}
+\setlength{\contenttopmargin}{35mm}
+% \setlength{\contenttopmargin}{30mm}
+\newlength{\contentbottommargin}
+\setlength{\contentbottommargin}{30mm}
+% \setlength{\contentbottommargin}{35mm}
+
+% \setlength{\marginparwidth}{0mm}
+
 \if@snu@under
 	\setlength{\paperwidth}{210mm}
 	\setlength{\paperheight}{297mm}
-	\setlength{\textwidth}{160mm} %% 210 mm - (2.5 cm)*2
-	\setlength{\textheight}{232mm} %% 297 mm - 3 cm - 3.5 cm
+	% \setlength{\textwidth}{160mm} %% 210 mm - (2.5 cm)*2
+	% \setlength{\textheight}{232mm} %% 297 mm - 3 cm - 3.5 cm
 	% 좌우 여백 2.5 cm
 	% 상단 여백 3 cm, 하단 여백 3.5 cm
 \else
 	\if@snu@fsbp
 		\setlength{\paperwidth}{188mm}
 		\setlength{\paperheight}{258mm}
-		\setlength{\textwidth}{138mm} %% 188 mm - (2.5 cm)*2
-		\setlength{\textheight}{193mm} %% 258 mm - 3 cm - 3.5 cm
+		% \setlength{\textwidth}{138mm} %% 188 mm - (2.5 cm)*2
+		% \setlength{\textheight}{193mm} %% 258 mm - 3 cm - 3.5 cm
 	\else
 		\setlength{\paperwidth}{182mm}
 		\setlength{\paperheight}{257mm}
-		\setlength{\textwidth}{132mm} %% 182 mm - (2.5 cm)*2
-		\setlength{\textheight}{192mm} %% 257 mm - 3 cm - 3.5 cm
+		% \setlength{\textwidth}{132mm} %% 182 mm - (2.5 cm)*2
+		% \setlength{\textheight}{192mm} %% 257 mm - 3 cm - 3.5 cm
 	\fi
 	% 좌우 여백 2.5 cm
 	% 상단 여백 3 cm, 하단 여백 3.5 cm
 \fi
+% 2025년도 본문 여백 기준 좌우 30mm, 상단 15mm+20mm, 하단 15mm + 15mm
+\setlength{\textwidth}{\paperwidth} 
+\addtolength{\textwidth}{-2\contenthorizontalmargin}
+
+\setlength{\textheight}{\paperheight}
+\addtolength{\textheight}{-\contenttopmargin}
+\addtolength{\textheight}{-\contentbottommargin}
+
 %% hoffset, voffset을 직접 바꾸면
 %% 일부 패키지와 잘 안 맞는다.
 %%\setlength{\hoffset}{-1in}
 %%\setlength{\voffset}{-1in}
-\setlength{\topmargin}{30mm}
+\setlength{\topmargin}{\contenttopmargin}
 \addtolength{\topmargin}{-1in}
 \setlength{\headheight}{0mm}
 \setlength{\headsep}{0mm} %% 헤더는 사용하지 않음.
-\addtolength{\marginparwidth}{-1.2cm} %% 안 중요함.
+\setlength{\marginparwidth}{0mm} %% 안 중요함. % add 에서 set 으로 수정
 %\setlength{\marginparsep}{3mm} %% 상관 없음.
-\setlength{\oddsidemargin}{25mm}
+\setlength{\oddsidemargin}{\contenthorizontalmargin}
 \addtolength{\oddsidemargin}{-1in}
 \setlength{\evensidemargin}{\oddsidemargin}
 \setlength{\footskip}{20mm} % 아래 page number 위치
@@ -323,7 +346,40 @@
 	\setlength{\pdfpageheight}{\paperheight}
 \fi
 
+% 이전 규격과 현재 규격 (2025) 를 왔다갔다하는 두 함수, resetmargin이 이전 규격으로 돌아가고 setmargin이 현재 2025 본문 규격으로 이동한다.
+% 이 둘을 길이를 정하는 코드가 있으면 무조건 둘러 쌌다.
+\newcommand{\@snu@resetmargin}{%
+	\addtolength{\textwidth}{2\contenthorizontalmargin}
+	\addtolength{\textwidth}{-50mm}
 
+	\addtolength{\textheight}{\contenttopmargin}
+	\addtolength{\textheight}{\contentbottommargin}
+	\addtolength{\textheight}{-65mm}
+
+	\addtolength{\topmargin}{30mm}
+	\addtolength{\topmargin}{-\contenttopmargin}
+
+	\addtolength{\oddsidemargin}{25mm}
+	\addtolength{\evensidemargin}{25mm}
+	\addtolength{\oddsidemargin}{-\contenthorizontalmargin}
+	\addtolength{\evensidemargin}{-\contenthorizontalmargin}
+}
+\newcommand{\@snu@setmargin}{%
+	\addtolength{\textwidth}{50mm}
+	\addtolength{\textwidth}{-2\contenthorizontalmargin}
+
+	\addtolength{\textheight}{65mm}
+	\addtolength{\textheight}{-\contenttopmargin}
+	\addtolength{\textheight}{-\contentbottommargin}
+
+	\addtolength{\topmargin}{\contenttopmargin}
+	\addtolength{\topmargin}{-30mm}
+
+	\addtolength{\oddsidemargin}{\contenthorizontalmargin}
+	\addtolength{\evensidemargin}{\contenthorizontalmargin}
+	\addtolength{\oddsidemargin}{-25mm}
+	\addtolength{\evensidemargin}{-25mm}
+}
 %% 줄간격
 \if@snu@under
 	%% 배행간 설정이 조금 까다롭다.
@@ -454,18 +510,25 @@
 %% 표지 하단 여백은 3 cm (5 mm 작음)
 %% 표지 좌우 여백은 2 cm (5 mm 작음)
 %% 제목의 linespread 1.3
+%% 2025년 도서관 기준 상하좌우 30mm, 이름은 좌우 50mm 이긴 하다
+%% 이전 기준 상단 5mm, 좌우 10mm 조정
+\@snu@resetmargin
 \newlength{\@snu@covertextheight}
 \setlength{\@snu@covertextheight}{\textheight}
 %\addtolength{\@snu@covertextheight}{5mm} % removed at version 0.99
+\@snu@setmargin
+
 \newcommand{\makefrontcover}{%
+	\@snu@resetmargin
 	% 영문일경우 함수 이내 강제 국문
 	\if@snu@ko \else \@snu@cover@revert@kotrue \@snu@kotrue
 	\fi
 	%% 여백 재조정
 	\cleardoublepage
-	\addtolength{\textwidth}{10mm}
-	\addtolength{\oddsidemargin}{-5mm}
-	\addtolength{\evensidemargin}{-5mm}
+	\addtolength{\textheight}{5mm}
+	\addtolength{\textwidth}{-10mm}
+	\addtolength{\oddsidemargin}{5mm}
+	\addtolength{\evensidemargin}{5mm}
 	\if@twocolumn \@restonecoltrue
 	\else \@restonecolfalse \fi
 	\onecolumn
@@ -549,9 +612,11 @@
 	%\end{minipage}
 	%% 여백 원래대로
 	\newpage
-	\addtolength{\textwidth}{-10mm}
-	\addtolength{\oddsidemargin}{5mm}
-	\addtolength{\evensidemargin}{5mm}
+	\addtolength{\textheight}{-5mm}
+	\addtolength{\textwidth}{10mm}
+	\addtolength{\oddsidemargin}{-5mm}
+	\addtolength{\evensidemargin}{-5mm}
+	\@snu@setmargin
 	\if@restonecol \twocolumn \fi
 	\if@snu@cover@revert@ko
 		\@snu@kofalse
@@ -564,6 +629,9 @@
 
 %% 인준지
 %% 인준지 하단 여백 2 cm (15 mm 작음)
+%% 2025 기준 인준지 또한 (논문제목 2cm 제외) 좌우 3cm
+%% 또 다시 조정
+\@snu@resetmargin
 \newlength{\@snu@approvaltextheight}
 \setlength{\@snu@approvaltextheight}{\textheight}
 %\addtolength{\@snu@approvaltextheight}{15mm}
@@ -581,11 +649,16 @@
 	\underline{\hspace{\@snu@underlinetmp}#1\hspace{\@snu@underlinetmp}}%
 }
 %\newcommand{\@snu@nameline}{\underline{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}}
+\@snu@setmargin
 \newcommand{\makeapproval}{%
 	\cleardoublepage
 	\if@twocolumn \@restonecoltrue
 	\else \@restonecolfalse \fi
 	\onecolumn
+	\@snu@resetmargin
+	\addtolength{\textwidth}{-10mm}
+	\addtolength{\oddsidemargin}{5mm}
+	\addtolength{\evensidemargin}{5mm}
 	%\enlargethispage{15mm}
 	\enlargethispage{10mm} % modified at version 0.99
 	\thispagestyle{empty}
@@ -664,6 +737,11 @@
 %	\end{minipage}
 	\newpage
 	\if@restonecol \twocolumn \fi
+	%% 여백 원래대로
+	\addtolength{\textwidth}{10mm}
+	\addtolength{\oddsidemargin}{-5mm}
+	\addtolength{\evensidemargin}{-5mm}
+	\@snu@setmargin
 %% 참고사항
 %% center enviornment를 사용하면 하단 여백이 안 맞음.
 %% 여백 설정이 조금만 어긋나면 페이지가 인쇄되지 않음.
